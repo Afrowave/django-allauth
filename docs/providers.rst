@@ -122,6 +122,55 @@ Development callback URL
     http://localhost:8000/accounts/angellist/login/callback/
 
 
+Apple
+-----
+
+App registration (create an App ID and then a related Service ID here)
+    https://developer.apple.com/account/resources/certificates/list
+
+Private Key registration (be sure to save it)
+    https://developer.apple.com/account/resources/authkeys/list
+
+Development callback URL
+    http://domain.com/accounts/apple/login/callback/
+
+Add the following configuration to your settings:
+
+.. code-block:: python
+
+    SOCIALACCOUNT_PROVIDERS = {
+        "apple": {
+            "APP": {
+                # Your service identifier.
+                "client_id": "your.service.id",
+
+                # The Key ID (visible in the "View Key Details" page).
+                "secret": "KEYID",
+
+                 # Member ID/App ID Prefix -- you can find it below your name
+                 # at the top right corner of the page, or it’s your App ID
+                 # Prefix in your App ID.
+                "key": "MEMAPPIDPREFIX",
+
+                # The certificate you downloaded when generating the key.
+                "certificate_key": """-----BEGIN PRIVATE KEY-----
+    s3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr
+    3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3cr3ts3
+    c3ts3cr3t
+    -----END PRIVATE KEY-----
+    """
+            }
+        }
+    }
+
+Note: Sign In With Apple uses a slight variation of OAuth2, which uses a POST
+instead of a GET. Unlike a GET with SameSite=Lax, the session cookie will not
+get sent along with a POST. If you encounter 'PermissionDenied' errors during
+Apple log in, check that you don't have any 3rd party middleweare that is
+generating a new session on this cross-origin POST, as this will prevent the
+login process from being able to access the original session after the POST
+completes.
+
 Auth0
 -----
 
@@ -212,7 +261,7 @@ The following Battle.net settings are available:
 .. code-block:: python
 
     SOCIALACCOUNT_PROVIDERS = {
-        'facebook': {
+        'battlenet': {
             'SCOPE': ['wow.profile', 'sc2.profile'],
             'REGION': 'us',
         }
@@ -632,6 +681,16 @@ Development callback URL
     add your site's actual domain to this section once it goes live.
 
 
+Figma
+------------------
+
+App registration (get your key and secret here)
+    https://www.figma.com/developers/apps
+
+Development callback URL
+    http://localhost:8000/accounts/figma/login/callback/
+
+
 Firefox Accounts
 ----------------
 
@@ -851,11 +910,15 @@ Optionally, you can specify the scope to use as follows:
         }
     }
 
-By default, ``profile`` scope is required, and optionally ``email`` scope
-depending on whether or not ``SOCIALACCOUNT_QUERY_EMAIL`` is enabled.
+By default (if you do not specify ``SCOPE``), ``profile`` scope is
+requested, and optionally ``email`` scope depending on whether or not
+``SOCIALACCOUNT_QUERY_EMAIL`` is enabled.
 
 You must set ``AUTH_PARAMS['access_type']`` to ``offline`` in order to
-receive a refresh token on first login and on reauthentication requests.
+receive a refresh token on first login and on reauthentication requests
+(which is needed to refresh authentication tokens in the background,
+without involving the user's browser). When unspecified, Google defaults
+to ``online``.
 
 
 Instagram
@@ -1090,33 +1153,6 @@ for the login. To restrict it, change the `tenant` setting as shown below.
     }
 
 
-Mixer
------
-
-API documentation
-    https://dev.mixer.com/guides/core/introduction
-
-App registration (get your key and secret here)
-    https://mixer.com/lab/oauth
-
-Development callback URL
-    http://localhost:8000/accounts/mixer/login/callback/
-
-You can change scopes for Mixer using the ``SCOPE`` parameter. For example, to add the ability to edit your mixer profile, you'd use:
-
-.. code-block:: python
-
-    SOCIALACCOUNT_PROVIDERS = {
-        'mixer': {
-            'SCOPE': [
-                'user:details:self',
-                'user:update:self',
-            ]
-        }
-    }
-
-The default scope list is ``['user:details:self']``, which is required to get your email address from Mixer. The full list of scopes is available at https://dev.mixer.com/reference/oauth/scopes
-
 Naver
 -----
 
@@ -1154,6 +1190,20 @@ App registration (get your key and secret here)
 Development callback URL
     http://example.com/accounts/odnoklassniki/login/callback/
 
+
+Okta
+-----
+
+.. code-block:: python
+
+    SOCIALACCOUNT_PROVIDERS = {
+        'okta': {
+            'OKTA_BASE_URL': 'example.okta.com',
+        }
+    }
+
+Okta OIDC
+    https://developer.okta.com/docs/reference/api/oidc/
 
 OpenID
 ------
@@ -1590,8 +1640,19 @@ access to more of the user's details such as username, full name, avatar, etc.
 You need to register an API key here:
     https://steamcommunity.com/dev/apikey
 
-Make sure to create a Steam SocialApp with that secret key.
+Copy the Key supplied by the website above into BOTH Client ID and Secret
+Key fields of the Social Application.
 
+
+Stocktwits
+----------
+
+App Registration
+  https://api.stocktwits.com/developers/apps/new
+
+- Site Domain, Must be an external url (127.0.0.1 and localhost do not work).
+- Consumer key is your ``client id``
+- Consumer secret is your ``secret key``
 
 Strava
 ------
@@ -1878,6 +1939,16 @@ Yahoo
 Register your OAuth2 app below and enter the resultant client id and secret into admin
     https://developer.yahoo.com/apps/create/
 
+The Redirect URL requires secure URLs, please see the section on HTTPS about how this is handled.
+
+When you register the app within yahoo, ensure you select the following API Permissions
+
+- OpenID Connect Permissions
+ - Email
+ - Profile
+
+When copying the supplied Client ID and Client Secret, do not include the 4 starting spaces.
+
 
 Yandex
 ------
@@ -1914,3 +1985,27 @@ in SOCIALACCOUNT_PROVIDERS. Otherwise, adding SCOPE and an empty string will giv
             'SCOPE': ''
         }
     }
+
+
+Zoho
+----
+
+App Registration
+  https://api-console.zoho.com/add
+
+  Select "Server-base Applications"
+
+Authorized Redirect URI
+    http://127.0.0.1:8000/accounts/zoho/login/callback/
+
+
+Zoom
+----
+
+App Registration
+  https://marketplace.zoom.us/develop/create
+
+Development callback URL
+    http://127.0.0.1:8000/accounts/zoom/login/callback/
+
+Select scope user:read during app registration.
