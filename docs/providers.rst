@@ -312,6 +312,17 @@ CERN OAuth2 Documentation
     https://espace.cern.ch/authentication/CERN%20Authentication/OAuth.aspx
 
 
+CILogon
+----
+CILogon is a federated identity provider for hundreds of universities and research institutions around the world.
+
+App registration (get your key and secret here)
+    https://cilogon.org/oauth2/register
+
+CILogon OIDC/OAuth2 Documentation
+    https://www.cilogon.org/oidc
+
+
 Dataporten
 ----------
 App registration (get your key and secret here)
@@ -752,6 +763,51 @@ More info:
     https://www.flickr.com/services/api/auth.oauth.html#authorization
 
 
+Frontier
+--------
+
+The Frontier provider is OAuth2 based.
+
+Client registration
+*******************
+Frontier Developments switched to OAuth2 based authentication in early 2019.
+Before a developer can use the authentication and CAPI (Companion API) service
+from Frontier, they must first apply for access.
+
+Go to https://user.frontierstore.net/ and apply for access. Once your application
+is approved for access. Under "Developer Zone", you will see a list of authorized
+clients granted access. To add access for your client, click on the "Create Client"
+button and fill out the form and submit the form.
+
+After creating the client access, click on "View" to reveal your Client ID and
+Shared Key. You can also regenerate the key in an event tha your shared key is
+compromised.
+
+Configuring Django
+******************
+The app credentials are configured for your Django installation via the admin
+interface. Create a new socialapp through ``/admin/socialaccount/socialapp/``.
+
+Fill in the form as follows:
+
+* Provider, "Frontier"
+* Name, your pick, suggest "Frontier"
+* Client id, is called "Client ID" by Frontier
+* Secret key, is called "Shared Key" by Frontier
+* Key, is not needed, leave blank.
+
+Optionally, you can specify the scope to use as follows:
+
+.. code-block:: python
+
+    SOCIALACCOUNT_PROVIDERS = {
+      'frontier': {
+        'SCOPE': ['auth', 'capi'],
+        'VERIFIED_EMAIL': True
+      },
+    }
+
+
 GitHub
 ------
 
@@ -974,6 +1030,12 @@ KEYCLOAK_URL:
     The url of your hosted keycloak server, it must end with ``/auth``. For
     example, you can use: ``https://your.keycloak.server/auth``
 
+KEYCLOAK_URL_ALT:
+    An alternate url of your hosted keycloak server, it must end with ``/auth``. For
+    example, you can use: ``https://your.keycloak.server/auth``
+
+    This can be used when working with Docker on localhost, with a frontend and a backend hosted in different containers.
+
 KEYCLOAK_REAML:
     The name of the ``realm`` you want to use.
 
@@ -1161,6 +1223,22 @@ App registration (get your key and secret here)
 
 Development callback URL
     http://localhost:8000/accounts/naver/login/callback/
+
+NetIQ/Microfocus AccessManager (NAM)
+-----------------------------------
+
+The following AccessManager settings are available:
+
+.. code-block:: python
+
+    SOCIALACCOUNT_PROVIDERS = {
+        'netiq': {
+            'NETIQ_URL': 'https://my.identity.provider.example.org',
+        }
+    }
+
+
+App registration (get your key and secret here) is done by the administrator of your NetIQ/Microfocus AccessManager.
 
 
 NextCloud
@@ -1697,6 +1775,32 @@ See more in documentation
  https://stripe.com/docs/connect/standalone-accounts
 
 
+TrainingPeaks
+-------------
+
+You need to request an API Partnership to get your OAth credentials:
+
+ https://api.trainingpeaks.com/request-access
+
+Make sure to request scope `athlete:profile` to be able to use OAuth
+for user login (default if setting `SCOPE` is omitted).
+
+In development you should only use the sandbox services, which is the
+default unless you set `USE_PRODUCTION` to `True`.
+
+.. code-block:: python
+
+    SOCIALACCOUNT_PROVIDERS = {
+        'trainingpeaks': {
+            'SCOPE': ['athlete:profile'],
+            'USE_PRODUCTION': False,
+        }
+    }
+
+API documentation:
+
+ https://github.com/TrainingPeaks/PartnersAPI/wiki
+
 Trello
 ------
 
@@ -2009,3 +2113,18 @@ Development callback URL
     http://127.0.0.1:8000/accounts/zoom/login/callback/
 
 Select scope user:read during app registration.
+
+
+Feishu
+----
+
+App Registration
+  https://open.feishu.cn/app
+
+Authorized Redirect URI
+    http://127.0.0.1:8000/accounts/feishu/login/callback/
+
+Into the developer background https://open.feishu.cn/app, click on the create self-built application, obtain app_id and app_secret.
+In the configuration of application security domain name added to redirect URL, such as https://open.feishu.cn/document.
+Redirect URL is the interface through which the application obtains the user's identity by using the user login pre-authorization code after the user has logged in.
+If it is not configured or configured incorrectly, the open platform will prompt the request to be illegal.

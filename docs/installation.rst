@@ -65,6 +65,7 @@ settings.py (Important - Please note 'django.contrib.sites' is required as INSTA
         'allauth.socialaccount.providers.bitly',
         'allauth.socialaccount.providers.box',
         'allauth.socialaccount.providers.cern',
+        'allauth.socialaccount.providers.cilogon',
         'allauth.socialaccount.providers.coinbase',
         'allauth.socialaccount.providers.dataporten',
         'allauth.socialaccount.providers.daum',
@@ -88,6 +89,7 @@ settings.py (Important - Please note 'django.contrib.sites' is required as INSTA
         'allauth.socialaccount.providers.fivehundredpx',
         'allauth.socialaccount.providers.flickr',
         'allauth.socialaccount.providers.foursquare',
+        'allauth.socialaccount.providers.frontier',
         'allauth.socialaccount.providers.fxa',
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.gitlab',
@@ -130,6 +132,7 @@ settings.py (Important - Please note 'django.contrib.sites' is required as INSTA
         'allauth.socialaccount.providers.strava',
         'allauth.socialaccount.providers.stripe',
         'allauth.socialaccount.providers.telegram',
+        'allauth.socialaccount.providers.trainingpeaks',
         'allauth.socialaccount.providers.trello',
         'allauth.socialaccount.providers.tumblr',
         'allauth.socialaccount.providers.twentythreeandme',
@@ -149,6 +152,7 @@ settings.py (Important - Please note 'django.contrib.sites' is required as INSTA
         'allauth.socialaccount.providers.zoho',
         'allauth.socialaccount.providers.zoom',
         'allauth.socialaccount.providers.okta',
+        'allauth.socialaccount.providers.feishu',
         ...
     ]
 
@@ -194,5 +198,5 @@ and follow these steps:
 
 - Add a ``Site`` for your domain, matching ``settings.SITE_ID`` (``django.contrib.sites`` app).
 - For each OAuth based provider, either add a ``SocialApp`` (``socialaccount``
-  app) containing the required client credentials, or, make make sure that these are
+  app) containing the required client credentials, or, make sure that these are
   configured via the ``SOCIALACCOUNT_PROVIDERS[<provider>]['APP']`` setting (see example above).
