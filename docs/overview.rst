@@ -89,6 +89,8 @@ Supported Providers
 
 - Draugiem
 
+- Drip
+
 - Dropbox (OAuth, OAuth2)
 
 - Dwolla (OAuth2)
@@ -140,6 +142,8 @@ Supported Providers
 - Kakao (OAuth2)
 
 - Keycloak (OAuth2)
+
+- LemonLDAP::NG (OAuth2)
 
 - Line (OAuth2)
 
