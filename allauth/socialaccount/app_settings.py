@@ -36,7 +36,35 @@ class AppSettings(object):
         """
         Provider specific settings
         """
-        return self._setting("PROVIDERS", {})
+        ret = self._setting("PROVIDERS", {})
+        oidc = ret.get("openid_connect")
+        if oidc:
+            ret["openid_connect"] = self._migrate_oidc(oidc)
+        return ret
+
+    def _migrate_oidc(self, oidc):
+        servers = oidc.get("SERVERS")
+        if servers is None:
+            return oidc
+        ret = {}
+        apps = []
+        for server in servers:
+            app = dict(**server["APP"])
+            app_settings = {}
+            if "token_auth_method" in server:
+                app_settings["token_auth_method"] = server["token_auth_method"]
+            app_settings["server_url"] = server["server_url"]
+            app.update(
+                {
+                    "name": server.get("name", ""),
+                    "provider_id": server["id"],
+                    "settings": app_settings,
+                }
+            )
+            assert app["provider_id"]
+            apps.append(app)
+        ret["APPS"] = apps
+        return ret
 
     @property
     def EMAIL_REQUIRED(self):
@@ -84,11 +112,9 @@ class AppSettings(object):
         return self._setting("SOCIALACCOUNT_STR", None)
 
 
-# Ugly? Guido recommends this himself ...
-# http://mail.python.org/pipermail/python-ideas/2012-May/014969.html
-import sys  # noqa
+_app_settings = AppSettings("SOCIALACCOUNT_")
 
 
-app_settings = AppSettings("SOCIALACCOUNT_")
-app_settings.__name__ = __name__
-sys.modules[__name__] = app_settings
+def __getattr__(name):
+    # See https://peps.python.org/pep-0562/
+    return getattr(_app_settings, name)

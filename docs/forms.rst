@@ -18,14 +18,15 @@ ACCOUNT_FORMS
 Default Settings::
 
     ACCOUNT_FORMS = {
-        'login': 'allauth.account.forms.LoginForm',
-        'signup': 'allauth.account.forms.SignupForm',
         'add_email': 'allauth.account.forms.AddEmailForm',
         'change_password': 'allauth.account.forms.ChangePasswordForm',
-        'set_password': 'allauth.account.forms.SetPasswordForm',
+        'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+        'login': 'allauth.account.forms.LoginForm',
         'reset_password': 'allauth.account.forms.ResetPasswordForm',
         'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
-        'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+        'set_password': 'allauth.account.forms.SetPasswordForm',
+        'signup': 'allauth.account.forms.SignupForm',
+        'user_token': 'allauth.account.forms.UserTokenForm',
     }
 
 login (``allauth.account.forms.LoginForm``)
@@ -89,11 +90,11 @@ Used on `account_email <views.html#e-mails-management-account-email>`__ view.
     from allauth.account.forms import AddEmailForm
     class MyCustomAddEmailForm(AddEmailForm):
 
-        def save(self):
+        def save(self, request):
 
             # Ensure you call the parent class's save.
             # .save() returns an allauth.account.models.EmailAddress object.
-            email_address_obj = super(MyCustomAddEmailForm, self).save()
+            email_address_obj = super(MyCustomAddEmailForm, self).save(request)
 
             # Add your own processing here.
 

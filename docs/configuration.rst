@@ -52,9 +52,9 @@ ACCOUNT_EMAIL_REQUIRED (=False)
 ACCOUNT_EMAIL_VERIFICATION (="optional")
   Determines the e-mail verification method during signup -- choose
   one of ``"mandatory"``, ``"optional"``, or ``"none"``.
-  
+
   Setting this to `"mandatory"` requires `ACCOUNT_EMAIL_REQUIRED` to be `True`
-  
+
   When set to "mandatory" the user is blocked from logging in until the email
   address is verified. Choose "optional" or "none" to allow logins
   with an unverified e-mail address. In case of "optional", the e-mail
@@ -159,6 +159,12 @@ ACCOUNT_LOGOUT_REDIRECT_URL (=`settings.LOGOUT_REDIRECT_URL or "/"`)
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE (=False)
   ``render_value`` parameter as passed to ``PasswordInput`` fields.
 
+ACCOUNT_PASSWORD_RESET_TOKEN_GENERATOR (=allauth.account.forms.EmailAwarePasswordResetTokenGenerator)
+  A string pointing to a custom token generator
+  (e.g. 'myapp.auth.CustomTokenGenerator') for password resets. This class
+  should implement the same methods as
+  ``django.contrib.auth.tokens.PasswordResetTokenGenerator`` or subclass it.
+
 ACCOUNT_PRESERVE_USERNAME_CASING (=True)
   This setting determines whether the username is stored in lowercase
   (``False``) or whether its casing is to be preserved (``True``). Note that when
@@ -173,12 +179,10 @@ ACCOUNT_PREVENT_ENUMERATION (=True)
   associated with an account. Enabling this setting prevents that, and an email
   is always sent, regardless of whether or not the account exists. Note that
   there is a slight usability tax to pay because there is no immediate feedback.
-  **Warning**: this is a work in progress, password reset is covered, yet,
-   signing up is not.
 
 ACCOUNT_RATE_LIMITS
   In order to be secure out of the box various rate limits are in place. The
-  rate limit mechanism is backed by a Django cache. Hence, rate limitting will
+  rate limit mechanism is backed by a Django cache. Hence, rate limiting will
   not work properly if you are using the `DummyCache`. To disable, set to
   ``{}``. When rate limits are hit the ``429.html`` template is rendered.
   Defaults to::
@@ -266,17 +270,17 @@ ACCOUNT_USERNAME_VALIDATORS (=None)
   (``'some.module.validators.custom_username_validators'``) to a list of
   custom username validators. If left unset, the validators setup
   within the user model username field are used.
-  
+
   Example::
-  
+
       # In validators.py
-      
+
       from django.contrib.auth.validators import ASCIIUsernameValidator
 
       custom_username_validators = [ASCIIUsernameValidator()]
-      
+
       # In settings.py
-      
+
       ACCOUNT_USERNAME_VALIDATORS = 'some.module.validators.custom_username_validators'
 
 SOCIALACCOUNT_ADAPTER (="allauth.socialaccount.adapter.DefaultSocialAccountAdapter")

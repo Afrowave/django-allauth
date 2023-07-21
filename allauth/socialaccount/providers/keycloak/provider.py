@@ -1,8 +1,10 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings
 
-from allauth.socialaccount.providers.base import ProviderAccount
-from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
+from allauth.socialaccount import app_settings
+from allauth.socialaccount.providers.openid_connect.provider import (
+    OpenIDConnectProvider,
+    OpenIDConnectProviderAccount,
+)
 
 
 OVERRIDE_NAME = (
@@ -12,34 +14,43 @@ OVERRIDE_NAME = (
 )
 
 
-class KeycloakAccount(ProviderAccount):
+class KeycloakAccount(OpenIDConnectProviderAccount):
     def get_avatar_url(self):
         return self.account.extra_data.get("picture")
 
-    def to_str(self):
-        dflt = super(KeycloakAccount, self).to_str()
-        return self.account.extra_data.get("name", dflt)
 
-
-class KeycloakProvider(OAuth2Provider):
+class KeycloakProvider(OpenIDConnectProvider):
     id = "keycloak"
     name = OVERRIDE_NAME
     account_class = KeycloakAccount
 
-    def get_default_scope(self):
-        return ["openid", "profile", "email"]
+    def get_login_url(self, request, **kwargs):
+        return super(OpenIDConnectProvider, self).get_login_url(request, **kwargs)
 
-    def extract_uid(self, data):
-        return str(data["id"])
+    def get_callback_url(self):
+        return super(OpenIDConnectProvider, self).get_callback_url()
 
-    def extract_common_fields(self, data):
-        return dict(
-            email=data.get("email"),
-            username=data.get("preferred_username"),
-            name=data.get("name"),
-            user_id=data.get("user_id"),
-            picture=data.get("picture"),
+    @property
+    def server_url(self):
+        return self.wk_server_url(self.base_server_url)
+
+    @property
+    def base_server_url(self):
+        other_url = self.settings.get("KEYCLOAK_URL_ALT")
+        if other_url is None:
+            other_url = self.settings.get("KEYCLOAK_URL")
+        url = "{0}/realms/{1}".format(other_url, self.settings.get("KEYCLOAK_REALM"))
+        return url
+
+    @property
+    def provider_base_url(self):
+        return "{0}/realms/{1}".format(
+            self.settings.get("KEYCLOAK_URL"), self.settings.get("KEYCLOAK_REALM")
         )
+
+    @property
+    def settings(self):
+        return app_settings.PROVIDERS.get(self.id, {})
 
 
 provider_classes = [KeycloakProvider]

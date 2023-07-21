@@ -4,9 +4,9 @@ Overview
 Requirements
 ------------
 
-- Python 3.5, 3.6, 3.7, 3.8 or 3.9
+- Python 3.7, 3.8, 3.9, or 3.10, 3.11
 
-- Django (2.0+)
+- Django (3.1+)
 
 - python-openid or python3-openid (depending on your Python version)
 
@@ -71,6 +71,8 @@ Supported Providers
 
 - CILogon (OAuth2)
 
+- Clever (OAuth2)
+
 - Coinbase (OAuth2)
 
 - Dataporten (OAuth2)
@@ -78,6 +80,8 @@ Supported Providers
 - Daum (OAuth2)
 
 - Digital Ocean (OAuth2)
+
+- DingTalk (OAuth2)
 
 - Discord (OAuth2)
 
@@ -135,6 +139,8 @@ Supported Providers
 
 - Hubic (OAuth2)
 
+- Hubspot (OAuth2)
+
 - Instagram (OAuth2)
 
 - JupyterHub (OAuth2)
@@ -159,6 +165,8 @@ Supported Providers
 
 - Microsoft (Graph) (OAuth2)
 
+- Miro (OAuth2)
+
 - Naver (OAuth2)
 
 - NetIQ/Microfocus AccessManager (OAuth2)
@@ -171,6 +179,8 @@ Supported Providers
 
 - OpenId
 
+- OpenID Connect (OAuth2)
+
 - OpenStreetMap (OAuth)
 
 - ORCID (OAuth2)
@@ -179,9 +189,9 @@ Supported Providers
 
 - Paypal (OAuth2)
 
-- Persona
-
 - Pinterest (OAuth2)
+
+- Pocket (OAuth)
 
 - QuickBooks (OAuth2)
 
@@ -196,6 +206,8 @@ Supported Providers
 - Shopify (OAuth2)
 
 - Slack (OAuth2)
+
+- Snapchat (OAuth2)
 
 - SoundCloud (OAuth2)
 
@@ -223,11 +235,15 @@ Supported Providers
 
 - Twitter (OAuth)
 
+- Twitter (OAuth2)
+
 - Untappd (OAuth2)
 
 - Vimeo (OAuth, OAuth2)
 
 - VK (OAuth2)
+
+- Wahoo (OAuth2)
 
 - Weibo (OAuth2)
 
@@ -256,25 +272,6 @@ Note: OAuth/OAuth2 support is built using a common code base, making it easy to 
 Features
 --------
 
-- Supports multiple authentication schemes (e.g. login by user name,
-  or by e-mail), as well as multiple strategies for account
-  verification (ranging from none to e-mail verification).
-
-- All access tokens are consistently stored so that you can publish
-  wall updates etc.
-
-Architecture & Design
----------------------
-
-- Pluggable signup form for asking additional questions during signup.
-
-- Support for connecting multiple social accounts to a Django user account.
-
-- The required consumer keys and secrets for interacting with
-  Facebook, Twitter and the likes are to be configured in the database
-  via the Django admin using the SocialApp model.
-
-- Consumer keys, tokens make use of the Django sites framework. This
-  is especially helpful for larger multi-domain projects, but also
-  allows for easy switching between a development (localhost) and
-  production setup without messing with your settings and database.
+.. include:: ../README.rst
+    :start-after: .. begin-features
+    :end-before: .. end-features

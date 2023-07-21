@@ -364,12 +364,22 @@ class AppSettings(object):
                 ret = []
         return ret
 
+    @property
+    def PASSWORD_RESET_TOKEN_GENERATOR(self):
+        from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
+        from allauth.utils import import_attribute
 
-# Ugly? Guido recommends this himself ...
-# http://mail.python.org/pipermail/python-ideas/2012-May/014969.html
-import sys  # noqa
+        token_generator_path = self._setting("PASSWORD_RESET_TOKEN_GENERATOR", None)
+        if token_generator_path is not None:
+            token_generator = import_attribute(token_generator_path)
+        else:
+            token_generator = EmailAwarePasswordResetTokenGenerator
+        return token_generator
 
 
-app_settings = AppSettings("ACCOUNT_")
-app_settings.__name__ = __name__
-sys.modules[__name__] = app_settings
+_app_settings = AppSettings("ACCOUNT_")
+
+
+def __getattr__(name):
+    # See https://peps.python.org/pep-0562/
+    return getattr(_app_settings, name)

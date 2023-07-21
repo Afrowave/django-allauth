@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     "allauth.socialaccount",
     "allauth.socialaccount.providers.dropbox",
     "allauth.socialaccount.providers.azure",
+    "allauth.socialaccount.providers.dingtalk",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.edx",
     "allauth.socialaccount.providers.evernote",
@@ -143,15 +144,19 @@ INSTALLED_APPS = (
     "allauth.socialaccount.providers.linkedin",
     "allauth.socialaccount.providers.mediawiki",
     "allauth.socialaccount.providers.openid",
-    "allauth.socialaccount.providers.persona",
+    "allauth.socialaccount.providers.openid_connect",
+    "allauth.socialaccount.providers.pinterest",
+    "allauth.socialaccount.providers.pocket",
     "allauth.socialaccount.providers.reddit",
     "allauth.socialaccount.providers.shopify",
     "allauth.socialaccount.providers.slack",
+    "allauth.socialaccount.providers.snapchat",
     "allauth.socialaccount.providers.soundcloud",
     "allauth.socialaccount.providers.stackexchange",
     "allauth.socialaccount.providers.telegram",
     "allauth.socialaccount.providers.twitch",
     "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.twitter_oauth2",
     "allauth.socialaccount.providers.vimeo",
     "allauth.socialaccount.providers.vimeo_oauth2",
     "allauth.socialaccount.providers.weibo",
@@ -170,7 +175,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 try:
     from .local_settings import *  # noqa
 except ImportError:
