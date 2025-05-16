@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.db import migrations, models
 
@@ -21,7 +18,7 @@ class Migration(migrations.Migration):
             field=models.EmailField(
                 unique=UNIQUE_EMAIL,
                 max_length=EMAIL_MAX_LENGTH,
-                verbose_name="e-mail address",
+                verbose_name="email address",
             ),
         ),
     ]

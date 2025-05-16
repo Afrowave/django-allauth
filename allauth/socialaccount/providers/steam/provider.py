@@ -1,12 +1,19 @@
-import requests
-
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
 from django.utils.http import urlencode
 
+from allauth.socialaccount.adapter import get_adapter
 from allauth.socialaccount.providers.openid.provider import (
     OpenIDAccount,
     OpenIDProvider,
 )
+
+
+if "allauth.socialaccount.providers.openid" not in settings.INSTALLED_APPS:
+    raise ImproperlyConfigured(
+        "The steam provider requires 'allauth.socialaccount.providers.openid' to be installed"
+    )
 
 
 class SteamAccount(OpenIDAccount):
@@ -26,7 +33,10 @@ class SteamAccount(OpenIDAccount):
 
 
 def extract_steam_id(url):
-    return url.lstrip("https://steamcommunity.com/openid/id/")
+    prefix = "https://steamcommunity.com/openid/id/"
+    if not url.startswith(prefix):
+        raise ValueError(url)
+    return url[len(prefix) :]
 
 
 def request_steam_account_summary(api_key, steam_id):
@@ -34,7 +44,7 @@ def request_steam_account_summary(api_key, steam_id):
     method = "ISteamUser/GetPlayerSummaries/v0002/"
     params = {"key": api_key, "steamids": steam_id}
 
-    resp = requests.get(api_base + method, params)
+    resp = get_adapter().get_requests_session().get(api_base + method, params=params)
     resp.raise_for_status()
     data = resp.json()
 
@@ -46,6 +56,12 @@ class SteamOpenIDProvider(OpenIDProvider):
     id = "steam"
     name = "Steam"
     account_class = SteamAccount
+    uses_apps = True
+
+    def __init__(self, request, app=None):
+        if app is None:
+            app = get_adapter().get_app(request, self.id)
+        super().__init__(request, app=app)
 
     def get_login_url(self, request, **kwargs):
         url = reverse("steam_login")

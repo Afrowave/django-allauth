@@ -3,9 +3,9 @@ django-allauth was started by Raymond Penners
 by and partly based on existing projects such as Pinax (account app),
 Django-Socialauth, django-socialregistration.
 
-Contributors
-============
+# Contributors
 
+Aarni Koskela
 Aaron van Derlip
 Abhinav Johri
 Abhishek Kumar Jaiswal
@@ -16,24 +16,28 @@ Ahmet Emre Aladağ
 Aiden Lu
 Aldiantoro Nugroho
 Alexander Gaevsky
+Alfredo Altamirano
 Andrean Franc
+Andrei Satsevich
 Andrew Chen Wang
 Andrey Akolpakov
 Andrey Balandin
 Andy Matthews
 Ani Vera
 Anna Sirota
+Anton Goncharov
 Antonin Delpeuch
 Aron Griffis
 Bas ten Berge
 Basil Shubin
 Ben Timby
-Benjamin Jorand
 Benjamin Howes
+Benjamin Jorand
 Bhavani Ravi
 Biel Massot
 Björn Andersson
 Bojan Mihelac
+Brandon Kong
 Bruno Alla
 Chris Beaven
 Chris Davis
@@ -44,6 +48,7 @@ Daniel Eriksson
 Daniel Widerin
 David Ascher
 David Cain
+David D. Lowe
 David Evans
 David Friedman
 David Hummel
@@ -55,6 +60,8 @@ Eric Amador
 Eric Delord
 Fabio Caritas Barrionuevo da Luz
 Facundo Gaich
+Felipe Faria
+Filip Dobrovolný
 Francis Brito
 Frantisek Malina
 Fred Palmer
@@ -63,11 +70,13 @@ George Whewell
 Griffith Rees
 Guignard Javier
 Guilhem Saurel
+Guillaume Schurck
 Guillaume Vincent
 Guoyu Hao
 Haesung Park
 Hatem Nassrat
 Hyunwoo Shim
+Ian R-P
 Ignacio Ocampo
 Illia Volochii
 J. Erm
@@ -102,10 +111,10 @@ Justin Pogrob
 Karthikeyan Singaravelan
 Karun Shrestha
 Kevin Dice
+Kimsia Sim
 Koichi Harakawa
 Kun Liu
 Kyle Harrison
-Kimsia Sim
 Lee Semel
 Lev Predan Kowarski
 Luis Diego García
@@ -168,13 +177,14 @@ Trey Corple
 Tuk Bredsdorff
 Udi Oron
 Victor Semionov
+Vlad Dmitrievich
 Volodymyr Yatsyk
 Vuong Nguyen
-Vlad Dmitrievich
 Wendy Edwards
 Will Gordon
 Will Ross
 William Li
 Yaroslav Muravsky
-Yuri Kriachko
 Youcef Mammar
+Yuri Kriachko
+Mohamed BEN MAKHLOUF

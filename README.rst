@@ -1,53 +1,78 @@
+
 ==========================
 Welcome to django-allauth!
 ==========================
 
-.. image:: https://github.com/pennersr/django-allauth/actions/workflows/ci.yml/badge.svg
+.. image:: https://codeberg.org/allauth/allauth.org/raw/commit/da3b56390e1b18eaec09b05cd89dfa7812212dfc/content/news/2024/04/website-redesign/logo-light.png
+   :target: https://allauth.org
+   :align: right
+   :alt: django-allauth logo
+   :width: 250px
+
+
+.. |ci| image:: https://img.shields.io/github/actions/workflow/status/pennersr/django-allauth/ci.yml.svg
    :target: https://github.com/pennersr/django-allauth/actions
-
-.. image:: https://img.shields.io/pypi/v/django-allauth.svg
+.. |pypi| image:: https://img.shields.io/pypi/v/django-allauth
    :target: https://pypi.python.org/pypi/django-allauth
-
-.. image:: https://coveralls.io/repos/pennersr/django-allauth/badge.svg?branch=main
+.. |cov| image:: https://img.shields.io/coverallsCoverage/github/pennersr/django-allauth
    :alt: Coverage Status
    :target: https://coveralls.io/r/pennersr/django-allauth
-
-.. image:: https://pennersr.github.io/img/bitcoin-badge.svg
+.. |btc| image:: https://img.shields.io/badge/bitcoin-donate-yellow
    :target: https://blockchain.info/address/1AJXuBMPHkaDCNX2rwAy34bGgs7hmrePEr
-
-.. image:: https://badgen.net/liberapay/receives/pennersr
+.. |liberapay| image:: https://img.shields.io/liberapay/receives/pennersr
    :target: https://en.liberapay.com/pennersr
-
-.. image:: https://img.shields.io/badge/code%20style-pep8-green.svg
+.. |pystyle| image:: https://img.shields.io/badge/code_style-pep8-green
    :target: https://www.python.org/dev/peps/pep-0008/
-
-.. image:: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+.. |jsstyle| image:: https://img.shields.io/badge/code_style-standard-brightgreen
    :target: http://standardjs.com
-
-.. image:: https://pennersr.github.io/img/emacs-badge.svg
+.. |editor| image:: https://img.shields.io/badge/editor-emacs-purple
    :target: https://www.gnu.org/software/emacs/
+.. |i18n| image:: https://img.shields.io/weblate/progress/allauth
+   :target: https://hosted.weblate.org/projects/allauth/django-allauth/
+.. |pypidl| image:: https://img.shields.io/pypi/dm/django-allauth
+   :target: https://pypistats.org/packages/django-allauth
+   :alt: PyPI - Downloads
+.. |djangodemo| image:: https://img.shields.io/badge/%E2%96%B6_demo-Django_project-red
+   :target: https://django.demo.allauth.org/
+   :alt: View Django Demo
+.. |reactdemo| image:: https://img.shields.io/badge/%E2%96%B6_demo-React_SPA-red
+   :target: https://react.demo.allauth.org/
+   :alt: View React SPA Demo
+
+|ci| |pypi| |cov| |btc| |liberapay| |pystyle| |jsstyle| |editor| |i18n| |pypidl| |djangodemo| |reactdemo|
+
 
 Integrated set of Django applications addressing authentication,
 registration, account management as well as 3rd party (social) account
 authentication.
 
 Home page
-  http://www.intenct.nl/projects/django-allauth/
+  https://allauth.org/
 
 Source code
-  http://github.com/pennersr/django-allauth
+  https://codeberg.org/allauth/django-allauth
 
-Mailing list
-  http://groups.google.com/group/django-allauth
+Issue Tracker
+  https://codeberg.org/allauth/django-allauth/issues
 
 Documentation
-  https://django-allauth.readthedocs.io/en/latest/
+  https://docs.allauth.org/en/latest/
 
 Stack Overflow
-  http://stackoverflow.com/questions/tagged/django-allauth
+  https://stackoverflow.com/questions/tagged/django-allauth
+
+Demo
+  https://django.demo.allauth.org and https://react.demo.allauth.org
+
+Translations
+  https://hosted.weblate.org/projects/allauth/django-allauth/
+
+.. end-welcome
 
 Rationale
 =========
+
+.. begin-rationale
 
 Most existing Django apps that address the problem of social
 authentication unfortunately focus only on one dimension - the social.
@@ -56,10 +81,10 @@ flows that are locally generated.
 
 This approach creates a development gap between local and social
 authentication flows. It has remained an issue in spite of numerous common
-scenarios that both require. For example, an e-mail address passed along by an
+scenarios that both require. For example, an email address passed along by an
 OpenID provider may not be verified. Therefore, prior to hooking up
-an OpenID account to a local account the e-mail address must be
-verified. This essentially is one of many use cases that mandate e-mail
+an OpenID account to a local account the email address must be
+verified. This essentially is one of many use cases that mandate email
 verification to be present in both worlds.
 
 Integrating both is a humongous and tedious process. It is not as
@@ -68,7 +93,9 @@ local account registration app to your ``INSTALLED_APPS`` list.
 
 This inadequacy is the reason for this project's existence  -- to offer a fully
 integrated authentication app that allows for both local and social
-authentication, with flows that just work, beautifully !
+authentication, with flows that just work, beautifully!
+
+.. end-rationale
 
 
 Features
@@ -78,7 +105,7 @@ Features
 
 **🔑 Comprehensive account functionality**
     Supports multiple authentication
-    schemes (e.g. login by user name, or by e-mail), as well as multiple
+    schemes (e.g. login by user name, or by email), as well as multiple
     strategies for account verification (ranging from none to mandatory email
     verification).
 
@@ -86,6 +113,9 @@ Features
     Login using external identity providers, supporting any *Open ID Connect
     compatible* provider, many *OAuth 1.0/2.0* providers, as well as
     custom protocols such as, for example, *Telegram* authentication.
+
+**💼 Enterprise ready**
+    Supports SAML 2.0, which is often used in a B2B context.
 
 **🕵️ Battle-tested**
     The package has been out in the open since 2010. It is in use by many
@@ -113,7 +143,7 @@ Features
 
 **⚙️ Configuration**
     The required consumer keys and secrets for interacting with Facebook,
-    Twitter and the likes can be configured using regular settings, or, can be
+    X (Twitter) and the likes can be configured using regular settings, or, can be
     configured in the database via the Django admin. Here, optional support for
     the Django sites framework is available, which is helpful for larger
     multi-domain projects, but also allows for easy switching between a
@@ -123,20 +153,13 @@ Features
 
 .. end-features
 
+
 Commercial Support
 ==================
 
-This project is sponsored by IntenCT_. If you require assistance on
-your project(s), please contact us: info@intenct.nl.
+.. begin-support
 
-.. _IntenCT: http://www.intenct.info
+Commercial support is available. If you find certain functionality missing, or
+require assistance on your project(s), please contact us: info@intenct.nl.
 
-
-Cross-Selling
-=============
-
-If you like this, you may also like:
-
-- django-trackstats: https://github.com/pennersr/django-trackstats
-- netwell: https://github.com/pennersr/netwell
-- Shove: https://github.com/pennersr/shove
+.. end-support
